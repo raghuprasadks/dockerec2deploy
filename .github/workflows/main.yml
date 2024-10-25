@@ -13,13 +13,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
     - name: Build Docker image
       run: |
         docker build -t myusername/myapp:latest .
-
-    - name: Log in to Docker Hub
-      run: |
-        echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
 
     - name: Push Docker image to Docker Hub
       run: |
@@ -43,10 +45,8 @@ jobs:
             if ! sudo systemctl is-active --quiet docker
             then
               sudo systemctl start docker
-            else
-              echo "Docker is already running"
             fi
           fi
-          sudo docker pull myusername/myapp:latest
-          sudo docker run -d -p 80:5000 myusername/myapp:latest
+          docker pull myusername/myapp:latest
+          docker run -d --name myapp_container -p 80:80 myusername/myapp:latest
         EOF
