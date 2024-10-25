@@ -45,8 +45,10 @@ jobs:
             if ! sudo systemctl is-active --quiet docker
             then
               sudo systemctl start docker
+            else
+              echo "Docker is already running"
             fi
           fi
-          docker pull myusername/myapp:latest
-          docker run -d --name myapp_container -p 80:80 myusername/myapp:latest
+          sudo docker pull myusername/myapp:latest
+          sudo docker run -d -p 80:5000 myusername/myapp:latest
         EOF
