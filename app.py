@@ -5,5 +5,10 @@ app = Flask(__name__)
 def hello_world():
     return 'Hello, World!'
 
+@app.route('/welcome')
+def welcome():
+    return 'Welcome to ci cd with git hub actions and ec2!'
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=5000)
