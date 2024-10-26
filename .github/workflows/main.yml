@@ -49,6 +49,12 @@ jobs:
               echo "Docker is already running"
             fi
           fi
+          # Stop any existing containers using port 80
+          existing_container=$(sudo docker ps -q --filter "publish=80")
+          if [ ! -z "$existing_container" ]; then
+            sudo docker stop $existing_container
+            sudo docker rm $existing_container
+          fi
           sudo docker pull raghuprasadkonandur/myapp:latest
           sudo docker run -d -p 80:5000 raghuprasadkonandur/myapp:latest
         EOF
