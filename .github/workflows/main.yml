@@ -21,11 +21,11 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t username/myapp:latest .
+        docker build -t raghuprasadkonandur/myapp:latest .
 
     - name: Push Docker image to Docker Hub
       run: |
-        docker push username/myapp:latest
+        docker push raghuprasadkonandur/myapp:latest
 
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
@@ -49,6 +49,6 @@ jobs:
               echo "Docker is already running"
             fi
           fi
-          sudo docker pull username/myapp:latest
-          sudo docker run -d -p 80:5000 username/myapp:latest
+          sudo docker pull raghuprasadkonandur/myapp:latest
+          sudo docker run -d -p 80:5000 raghuprasadkonandur/myapp:latest
         EOF
